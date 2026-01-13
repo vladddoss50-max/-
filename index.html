@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ВСЁ ДЛЯ ФИПСИ от ВТ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1><i class="fas fa-chart-bar"></i> ВСЁ ДЛЯ ФИПСИ от ВТ</h1>
+                <p class="subtitle">Онлайн-платформа для статистических расчетов</p>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <h2>Статистические критерии и анализы</h2>
+                <p>Выберите нужный статистический критерий для анализа ваших данных</p>
+            </section>
+
+            <section class="criteria-grid">
+                <div class="criteria-card" onclick="location.href='/criteria/fisher'">
+                    <div class="criteria-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Критерий Фишера</h3>
+                    <p>Сравнение дисперсий двух выборок</p>
+                </div>
+
+                <div class="criteria-card" onclick="location.href='/criteria/student'">
+                    <div class="criteria-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Критерий Стьюдента</h3>
+                    <p>Сравнение средних двух выборок</p>
+                </div>
+
+                <div class="criteria-card" onclick="location.href='/criteria/siegel-tukey'">
+                    <div class="criteria-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3>Критерий Сиджела-Тьюки</h3>
+                    <p>Сравнение дисперсий (непараметрический)</p>
+                </div>
+
+                <div class="criteria-card" onclick="location.href='/criteria/mann-whitney'">
+                    <div class="criteria-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Критерий Манна-Уитни</h3>
+                    <p>Сравнение двух независимых выборок</p>
+                </div>
+
+                <div class="criteria-card" onclick="location.href='/criteria/spearman'">
+                    <div class="criteria-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Критерий Спирмена</h3>
+                    <p>Корреляционный анализ</p>
+                </div>
+
+                <div class="criteria-card" onclick="location.href='/criteria/hortley'">
+                    <div class="criteria-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>Критерий Хортлея</h3>
+                    <p>Обнаружение выбросов в данных</p>
+                </div>
+
+                <div class="criteria-card" onclick="location.href='/criteria/cochran'">
+                    <div class="criteria-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3>Критерий Кочрена</h3>
+                    <p>Сравнение нескольких долей</p>
+                </div>
+
+                <div class="criteria-card" onclick="location.href='/criteria/bartlett'">
+                    <div class="criteria-icon">
+                        <i class="fas fa-equals"></i>
+                    </div>
+                    <h3>Критерий Бартлета</h3>
+                    <p>Проверка равенства дисперсий</p>
+                </div>
+
+                <div class="criteria-card" onclick="location.href='/criteria/anova'">
+                    <div class="criteria-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>Однофакторный дисперсионный анализ</h3>
+                    <p>Сравнение средних нескольких выборок</p>
+                </div>
+
+                <div class="criteria-card" onclick="location.href='/criteria/pearson'">
+                    <div class="criteria-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h3>Корреляция Пирсона</h3>
+                    <p>Оценка линейной связи между переменными</p>
+                </div>
+            </section>
+
+            <section class="instructions">
+                <h2>Как пользоваться платформой?</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Выберите нужный статистический критерий</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Введите ваши данные в соответствующем формате</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Нажмите "Рассчитать" и получите результат</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <p>Проанализируйте результаты и визуализацию</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2024 ВСЁ ДЛЯ ФИПСИ от ВТ. Все права защищены.</p>
+            <p class="footer-info">Для научных и учебных целей. Результаты требуют интерпретации специалиста.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

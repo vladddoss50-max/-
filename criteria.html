@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ criteria.name }} - ВСЁ ДЛЯ ФИПСИ от ВТ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1><i class="fas fa-chart-bar"></i> ВСЁ ДЛЯ ФИПСИ от ВТ</h1>
+            </div>
+            <nav>
+                <a href="/"><i class="fas fa-home"></i> На главную</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="criteria-container">
+                <div class="criteria-header">
+                    <h2>{{ criteria.name }}</h2>
+                    <p class="criteria-description">{{ criteria.description }}</p>
+                </div>
+
+                <div class="input-section">
+                    {% if criteria_name in ['student', 'fisher', 'mann-whitney', 'spearman', 'pearson', 'siegel-tukey'] %}
+                    <div class="input-group">
+                        <h3>Введите данные</h3>
+                        <p>Введите числа, разделенные запятыми (например: 1.2, 3.4, 5.6, 7.8)</p>
+
+                        <div class="data-inputs">
+                            <div class="input-field">
+                                <label for="data1">Выборка 1:</label>
+                                <textarea id="data1" rows="4" placeholder="Пример: 12.5, 14.3, 15.2, 13.8, 16.1"></textarea>
+                            </div>
+
+                            <div class="input-field">
+                                <label for="data2">Выборка 2:</label>
+                                <textarea id="data2" rows="4" placeholder="Пример: 10.8, 11.5, 12.9, 11.2, 13.4"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% elif criteria_name in ['cochran', 'bartlett', 'anova', 'hortley'] %}
+                    <div class="input-group">
+                        <h3>Введите данные по группам</h3>
+                        <p>Введите данные для каждой группы, разделяя числа запятыми</p>
+
+                        <div id="groups-container">
+                            <div class="group-input">
+                                <label>Группа 1:</label>
+                                <textarea class="group-data" rows="3" placeholder="Пример: 12.5, 14.3, 15.2, 13.8"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label>Группа 2:</label>
+                                <textarea class="group-data" rows="3" placeholder="Пример: 10.8, 11.5, 12.9, 11.2"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="group-controls">
+                            <button type="button" id="add-group" class="btn-secondary">
+                                <i class="fas fa-plus"></i> Добавить группу
+                            </button>
+                            <button type="button" id="remove-group" class="btn-secondary" disabled>
+                                <i class="fas fa-minus"></i> Удалить группу
+                            </button>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="form-actions">
+                        <button id="calculate-btn" class="btn-primary">
+                            <i class="fas fa-calculator"></i> Рассчитать
+                        </button>
+                        <button id="example-btn" class="btn-secondary">
+                            <i class="fas fa-eye"></i> Загрузить пример
+                        </button>
+                        <button id="clear-btn" class="btn-secondary">
+                            <i class="fas fa-eraser"></i> Очистить
+                        </button>
+                    </div>
+                </div>
+
+                <div class="results-section" id="results-section" style="display: none;">
+                    <h3>Результаты расчета</h3>
+                    <div id="results-content"></div>
+                    <div id="plot-container"></div>
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fas fa-info-circle"></i> Информация о критерии</h3>
+
+                    {% if criteria_name == 'student' %}
+                    <p>Критерий Стьюдента (t-критерий) используется для проверки гипотезы о равенстве средних значений двух выборок.</p>
+                    <p><strong>Условия применения:</strong></p>
+                    <ul>
+                        <li>Нормальность распределения в обеих группах</li>
+                        <li>Независимость наблюдений</li>
+                        <li>Равенство дисперсий (проверяется критерием Фишера)</li>
+                    </ul>
+
+                    {% elif criteria_name == 'fisher' %}
+                    <p>Критерий Фишера (F-критерий) используется для сравнения дисперсий двух выборок.</p>
+                    <p><strong>Условия применения:</strong></p>
+                    <ul>
+                        <li>Нормальность распределения в обеих группах</li>
+                        <li>Независимость наблюдений</li>
+                    </ul>
+
+                    {% elif criteria_name == 'mann-whitney' %}
+                    <p>Критерий Манна-Уитни — непараметрический аналог t-критерия Стьюдента.</p>
+                    <p><strong>Преимущества:</strong></p>
+                    <ul>
+                        <li>Не требует нормальности распределения</li>
+                        <li>Устойчив к выбросам</li>
+                        <li>Может применяться к порядковым данным</li>
+                    </ul>
+
+                    {% elif criteria_name == 'pearson' %}
+                    <p>Корреляция Пирсона измеряет линейную связь между двумя переменными.</p>
+                    <p><strong>Интерпретация коэффициента:</strong></p>
+                    <ul>
+                        <li>0.0-0.3: слабая корреляция</li>
+                        <li>0.3-0.7: умеренная корреляция</li>
+                        <li>0.7-1.0: сильная корреляция</li>
+                    </ul>
+
+                    {% else %}
+                    <p>Подробная информация о методе будет доступна после расчета.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2024 ВСЁ ДЛЯ ФИПСИ от ВТ. Все права защищены.</p>
+        </footer>
+    </div>
+
+    <script>
+        const criteriaName = "{{ criteria_name }}";
+        const exampleData = {
+            'student': {
+                data1: '12.5, 14.3, 15.2, 13.8, 16.1, 14.9, 13.5, 15.8',
+                data2: '10.8, 11.5, 12.9, 11.2, 13.4, 12.1, 11.8, 12.7'
+            },
+            'fisher': {
+                data1: '12.5, 14.3, 15.2, 13.8, 16.1, 14.9',
+                data2: '10.8, 11.5, 12.9, 11.2, 13.4, 12.1'
+            },
+            'mann-whitney': {
+                data1: '12, 15, 18, 14, 16, 13, 17',
+                data2: '8, 10, 9, 11, 12, 10, 9'
+            },
+            'spearman': {
+                data1: '1, 2, 3, 4, 5, 6, 7, 8',
+                data2: '2, 3, 1, 5, 4, 8, 6, 7'
+            },
+            'pearson': {
+                data1: '1, 2, 3, 4, 5, 6, 7, 8',
+                data2: '2, 4, 5, 4, 5, 7, 8, 9'
+            },
+            'siegel-tukey': {
+                data1: '12, 15, 18, 14, 16, 13',
+                data2: '8, 10, 9, 11, 12, 10'
+            },
+            'anova': {
+                groups: [
+                    '12.5, 14.3, 15.2, 13.8',
+                    '10.8, 11.5, 12.9, 11.2',
+                    '9.5, 10.2, 8.9, 9.8'
+                ]
+            }
+        };
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
